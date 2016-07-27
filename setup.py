@@ -124,7 +124,7 @@ class CMake(object):
 
 # build the library if we haven't already
 if not os.path.exists(os.path.join(swigLib, modName)):
-    buildDir = mkdtemp()
+    buildDir = mkdtemp(dir=thisDir)
     try:
         env = os.environ.copy()
         cmake = CMake(env)
