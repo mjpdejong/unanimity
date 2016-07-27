@@ -39,6 +39,9 @@ def which(program, env=os.environ):
 class MyClean(dclean):
     def run(self):
         rmtree(swigLib, ignore_errors=True)
+        rmtree(os.path.join(thisDir, "dist"), ignore_errors=True)
+        rmtree(os.path.join(thisDir, "ConsensusCore2.egg-info"), ignore_errors=True)
+        os.remove(os.path.join(thisDir, "swig", "ConsensusCore2.i"))
         dclean.run(self)
 
 
