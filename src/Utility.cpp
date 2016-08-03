@@ -43,12 +43,21 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <pacbio/consensus/Template.h>
 #include <pacbio/io/Utility.h>
 
 using namespace std;
 
 namespace PacBio {
 namespace IO {
+namespace {
+
+std::ostream& operator<<(std::ostream& out, const std::pair<size_t, size_t>& x)
+{
+    return out << '(' << x.first << ", " << x.second << ')';
+}
+
+}  // anonymous namespace
 
 string AbsolutePath(const string& path)
 {
@@ -131,6 +140,37 @@ bool ValidBaseFeatures(const PacBio::BAM::DataSet& ds)
         }
     }
     return true;
+}
+
+template <typename M>
+void WriteMatrix(const M& mat, const AbstractRecursor& recursor, const size_t offset, const bool reversed)
+{
+    std::cout << std::pair<size_t, size_t>(mat.Rows(), mat.Columns()) << std::endl;
+
+    for (size_t j = 0; j < mat.Columns(); ++j)
+        std::cout << " " << mat.UsedRowRange(j);
+    std::cout << std::endl;
+
+    std::cout << "lg: ";
+    for (size_t j = 0; j < mat.Columns(); ++j)
+        std::cout << "\t" << std::fixed << std::setprecision(3) << mat.GetLogScale(j);
+    std::cout << std::endl;
+
+    std::cout << "lgS: ";
+    double lgS = 0.0;
+    for (size_t j = 0; j < mat.Columns(); ++j)
+        std::cout << "\t" << std::fixed << std::setprecision(3) << (lgS += mat.GetLogScale(j));
+    std::cout << std::endl;
+
+    for (size_t i = 0; i < mat.Rows(); ++i)
+    {
+        for (size_t j = 0; j < mat.Columns(); ++j)
+        {
+            size_t col = reversed ? mat.Columns() - j - 1 : j;
+            std::cout << "\t" << std::fixed << std::setprecision(3) << std::log(mat.Get(i, j)) + mat.GetLogScale(j) + recursor.UndoCounterWeights(col + offset);
+        }
+        std::cout << std::endl;
+    }
 }
 
 }  // namespace CCS

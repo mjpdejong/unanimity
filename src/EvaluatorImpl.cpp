@@ -47,42 +47,6 @@ namespace {  // anonymous
 
 constexpr size_t EXTEND_BUFFER_COLUMNS = 8;
 
-#if 0
-std::ostream& operator<<(std::ostream& out, const std::pair<size_t, size_t>& x)
-{
-    return out << '(' << x.first << ", " << x.second << ')';
-}
-
-void WriteMatrix(const ScaledMatrix& mat)
-{
-    std::cerr << std::pair<size_t, size_t>(mat.Rows(), mat.Columns()) << std::endl;
-
-    for (size_t j = 0; j < mat.Columns(); ++j)
-        std::cerr << " " << mat.UsedRowRange(j);
-    std::cerr << std::endl;
-
-    std::cerr << "lg: ";
-    for (size_t j = 0; j < mat.Columns(); ++j)
-        std::cerr << "\t" << std::fixed << std::setprecision(3) << mat.GetLogScale(j);
-    std::cerr << std::endl;
-
-    std::cerr << "lgS: ";
-    double lgS = 0.0;
-    for (size_t j = 0; j < mat.Columns(); ++j)
-        std::cerr << "\t" << std::fixed << std::setprecision(3) << (lgS += mat.GetLogScale(j));
-    std::cerr << std::endl;
-
-    for (size_t i = 0; i < mat.Rows(); ++i)
-    {
-        for (size_t j = 0; j < mat.Columns(); ++j)
-        {
-            std::cerr << "\t" << std::fixed << std::setprecision(3) << std::log(mat.Get(i, j)) + mat.GetLogScale(j);
-        }
-        std::cerr << std::endl;
-    }
-}
-#endif
-
 }  // namespace anonymous
 
 EvaluatorImpl::EvaluatorImpl(std::unique_ptr<AbstractTemplate>&& tpl, const MappedRead& mr,

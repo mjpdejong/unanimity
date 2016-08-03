@@ -69,5 +69,8 @@ std::vector<std::string> FlattenFofn(const std::vector<std::string>& files);
 
 bool ValidBaseFeatures(const PacBio::BAM::DataSet& ds);
 
+template <typename M>
+void WriteMatrix(const M& mat, const AbstractRecursor& recursor, const size_t offset = 0, const bool reversed = false);
+
 }  // namespace IO
 }  // namespace PacBio
