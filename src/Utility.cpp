@@ -52,6 +52,9 @@ namespace PacBio {
 namespace IO {
 namespace {
 
+// Forward declare Recursor for WriteMatrix
+class AbstractRecursor;
+
 std::ostream& operator<<(std::ostream& out, const std::pair<size_t, size_t>& x)
 {
     return out << '(' << x.first << ", " << x.second << ')';
