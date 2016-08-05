@@ -42,6 +42,8 @@
 #include <pacbio/data/Read.h>
 #include <pacbio/data/State.h>
 #include <pacbio/consensus/Template.h>
+#include <pacbio/consensus/MatrixViewConvention.h>
+
 
 namespace PacBio {
 namespace Consensus {
@@ -96,6 +98,9 @@ public:
 public:
     const AbstractMatrix& Alpha() const;
     const AbstractMatrix& Beta() const;
+
+    const AbstractMatrix* AlphaView(MatrixViewConvention c) const;
+    const AbstractMatrix* BetaView(MatrixViewConvention c) const;
 
 private:
     void CheckZScore(const double minZScore, const std::string& model);
