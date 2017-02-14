@@ -7,10 +7,10 @@ function(create_exe libName)
     )
 
     target_link_libraries(${libName}
+        ${ARGV1}
+        ${UNY_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
         ${CMAKE_DL_LIBS}
-        ${UNY_LIBRARIES}
-        ${ARGV1}
     )
 
     install(TARGETS ${libName} RUNTIME DESTINATION bin)
